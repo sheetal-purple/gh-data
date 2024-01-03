@@ -46,7 +46,7 @@ jobs:
       - name: Deploy
         run: |
           echo "Deploying..."
-          git clone https://github:${{ env.GITHUB_TOKEN }}@github.com/sheetal-purple/another repo # clone repo to track history
+          git clone https://github-actions[bot]:${{ env.GITHUB_TOKEN }}@github.com/sheetal-purple/another repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
