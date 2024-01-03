@@ -44,4 +44,17 @@ jobs:
       - name: Output contents
         run: ls
       - name: Deploy
-        run: echo "Deploying..."
+        run: |
+          echo "Deploying..."
+          git clone https://github:"$GITHUB_TOKEN"@github.com/sheetal-purple/another repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add --force .
+          git commit -m "add contents of dist-files v${{ env.SPEC_VERSION }}"
+          git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
+          git push origin master --follow-tags --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SPEC_VERSION: 1.0.0
