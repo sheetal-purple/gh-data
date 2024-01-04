@@ -54,11 +54,11 @@ jobs:
           git add --force .
           git commit -m "add contents of dist-files v${{ env.SPEC_VERSION }}"
           git log
-          # echo "${{ secrets.GITHUB_TOKEN }}" > token.txt
+          echo "${{ secrets.GITHUB_TOKEN }}" > token.txt
 
           # Authorize GitHub CLI for the current repository and
           # create a pull-requests containing the updates.
-          # gh auth login --with-token < token.txt
+          gh auth login --with-token < token.txt
 
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
           git push origin master --follow-tags --force
