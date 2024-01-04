@@ -46,6 +46,10 @@ jobs:
       - name: Deploy
         run: |
           echo "Deploying..."
+
+          # adding as per https://stackoverflow.com/questions/64270867/auth-error-trying-to-copy-a-repo-with-github-actions
+          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+
           git clone https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/sheetal-purple/another repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
@@ -54,11 +58,13 @@ jobs:
           git add --force .
           git commit -m "add contents of dist-files v${{ env.SPEC_VERSION }}"
           git log
-          echo "${{ secrets.GITHUB_TOKEN }}" > token.txt
 
-          # Authorize GitHub CLI for the current repository and
-          # create a pull-requests containing the updates.
-          gh auth login --with-token < token.txt
+          # relogin did not work as suggested in https://github.com/orgs/community/discussions/49745
+          # echo "${{ secrets.GITHUB_TOKEN }}" > token.txt
+
+          # # Authorize GitHub CLI for the current repository and
+          # # create a pull-requests containing the updates.
+          # gh auth login --with-token < token.txt
 
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
           git push origin master --follow-tags --force
