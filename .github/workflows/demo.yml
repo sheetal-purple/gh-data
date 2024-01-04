@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           pwd
-          cd another
+          # cd another
           git config -l
           date > generated.txt
           git config user.name github-actions
