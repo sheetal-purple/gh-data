@@ -67,7 +67,7 @@ jobs:
           # adding as per https://stackoverflow.com/questions/64270867/auth-error-trying-to-copy-a-repo-with-github-actions
           # git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
 
-          git clone https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/sheetal-purple/another repo # clone repo to track history
+          git clone https://github-actions[bot]:${{ secrets.GHPAT }}@github.com/sheetal-purple/another repo # clone repo to track history
           ls -l
           mv repo/.git . # move cloned git history to root
           rm -rf repo
