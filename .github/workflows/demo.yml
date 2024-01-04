@@ -31,10 +31,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-files
-          path: dist
-          # path: |
-          #   dist
-          #   package.json
+          # path: dist
+          path: |
+            dist
+            package.json
   pushtoanother:
     runs-on: ubuntu-latest
     steps:
