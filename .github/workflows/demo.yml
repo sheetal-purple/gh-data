@@ -46,21 +46,23 @@ jobs:
       - name: Deploy
         run: |
           echo "Deploying..."
-          git clone https://github-actions[bot]:${{ env.GITHUB_TOKEN }}@github.com/sheetal-purple/another repo # clone repo to track history
+          echo ${{ secrets.GITHUB_TOKEN }}
+          git clone https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/sheetal-purple/another repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add --force .
           git commit -m "add contents of dist-files v${{ env.SPEC_VERSION }}"
-          echo "${{ env.GITHUB_TOKEN }}" > token.txt
+          # echo "${{ secrets.GITHUB_TOKEN }}" > token.txt
+          echo ${{ secrets.GITHUB_TOKEN }}
 
           # Authorize GitHub CLI for the current repository and
           # create a pull-requests containing the updates.
-          gh auth login --with-token < token.txt
+          # gh auth login --with-token < token.txt
 
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
-          git push origin master --follow-tags --force
+          # git push origin master --follow-tags --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SPEC_VERSION: 1.0.0
