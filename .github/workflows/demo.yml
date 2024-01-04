@@ -35,6 +35,20 @@ jobs:
           # path: |
           #   dist
           #   package.json
+  pushtoanother:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: sheetal-purple/another
+          path: another
+      - run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
   deploy:
     needs: build
     runs-on: ubuntu-latest
